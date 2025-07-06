@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh Sách File Upload</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        img { max-width: 100px; }
+        .error-img { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Danh Sách File Upload</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tên File</th>
+                <th>Ảnh</th>
+                <th>Thời Gian Upload</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="upload : ${uploads}">
+                <td th:text="${upload.id}"></td>
+                <td th:text="${upload.fileName}"></td>
+                <td>
+                    <img th:src="@{'/images/' + ${upload.fileName}}" th:alt="${upload.fileName}"
+                            th:unless="${#strings.isEmpty(upload.fileName)}"
+                            onerror="this.style.display='none'; this.nextSibling.style.display='block';" />
+                    <span class="error-img" style="display: none;">Ảnh không tồn tại</span>
+                </td>
+                <td th:text="${upload.uploadTime}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/upload">Quay lại upload</a>
+</body>
+</html>

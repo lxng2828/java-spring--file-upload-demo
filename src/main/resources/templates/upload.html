@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload File Demo</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        #preview { max-width: 200px; margin-top: 10px; }
+        .message { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Upload Ảnh</h2>
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        <label for="fileInput">Chọn ảnh:</label>
+        <input type="file" id="fileInput" name="file" accept=".jpg,.png" />
+        <img id="preview" style="display: none;" />
+        <button type="submit">Upload</button>
+    </form>
+    <p th:if="${message}" th:class="${message.startsWith('Lỗi') ? 'error' : 'message'}" th:text="${message}"></p>
+    <a href="/uploads">Xem danh sách file</a>
+
+    <script>
+        $("#fileInput").change(function() {
+            const file = this.files[0];
+            if (file && ['image/jpeg', 'image/png'].includes(file.type)) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#preview").attr("src", e.target.result).show();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Vui lòng chọn file .jpg hoặc .png!");
+            }
+        });
+    </script>
+</body>
+</html>

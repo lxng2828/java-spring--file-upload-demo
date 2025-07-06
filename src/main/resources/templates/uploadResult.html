@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Kết Quả Upload</title>
+    <style>
+        .message { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Kết Quả Upload</h2>
+    <p th:class="${message.startsWith('Lỗi') ? 'error' : 'message'}" th:text="${message}"></p>
+    <a href="/upload">Quay lại upload</a>
+    <a href="/uploads">Xem danh sách file</a>
+</body>
+</html>
